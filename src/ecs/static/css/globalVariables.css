@@ -1,0 +1,35 @@
+/*declairing variables*/
+:root {
+    --backgroundColor: #383838;
+    --navbarColor: #252525;
+    --textColor: #F8F9FA;
+    --cardColor: #252525;
+    --cardCollectionColor: #383838;
+    --footerColor: #252525;
+}
+
+/*Select all*/
+* {
+    /*sets a new default font of the website, connected to google fonts*/
+    font-family: 'Montserrat', sans-serif;
+    /*sets the font size to 2% of the width of the viewport*/
+    font-size: 2vw;
+}
+
+/*when viewport size is above 949px wide*/
+@media only screen and (min-width: 950px) {
+    /*select all*/
+    * {
+        /*setting the minimum font size, must use important or will not show*/
+        font-size: 19px;
+    }
+}
+
+/*when viewport is below 601px wide*/
+@media only screen and (max-width: 600px) {
+    /*select all*/
+    * {
+        /*setting the maximum font size*/
+        font-size: 12px;
+    }
+}

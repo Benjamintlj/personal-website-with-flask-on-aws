@@ -1,0 +1,12 @@
+.artContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.art {
+  height: 11vw;
+  border-radius: 25%;
+}

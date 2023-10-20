@@ -1,0 +1,44 @@
+/*selecting the container for the title*/
+.gymTitleContainer {
+    /*setting its display value to block, so that nothing appears inline*/
+    display: block;
+    /*setting its width to 100% the width of the viewport*/
+    width: 100%;
+    /*giving a inner shadow, to give a embossed effect*/
+    box-shadow: inset 1vw -2.5vw 5vw rgba(0,0,0,0.6);
+}
+
+/*selecting the title its self*/
+.gymTitle {
+    /*setting its margin to 0, so that it takes up less room*/
+    margin: 0;
+    padding-top: 6vw;
+    /*text is centered*/
+    text-align: center;
+    /*setting a relative font size*/
+    font-size: 5vw;
+    /*setting the font colour*/
+    color: var(--textColor);
+}
+
+
+
+/*makes the background move*/
+.mainSection {
+    /*sets the height of the element to 30% of the width of the viewport*/
+    height: 20vw;
+
+
+    background-image: linear-gradient(
+        to bottom right,
+        #4affde 0%, #5b9dff 40%, #d06bff 60%, #ff34d2 100%
+    );
+
+    background-size: 200% 200%;
+    animation: movingGradient 5s linear infinite alternate;
+}
+
+@keyframes movingGradient {
+    from { background-position: 0 0; }
+    to { background-position: 100% 100%; }
+}

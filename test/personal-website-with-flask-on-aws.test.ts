@@ -9,9 +9,9 @@ test('SQS Queue Created', () => {
 //     // WHEN
 //   const stack = new PersonalWebsiteWithFlaskOnAws.PersonalWebsiteWithFlaskOnAwsStack(app, 'MyTestStack');
 //     // THEN
-//   const template = Template.fromStack(stack);
+//   const templates = Template.fromStack(stack);
 
-//   template.hasResourceProperties('AWS::SQS::Queue', {
+//   templates.hasResourceProperties('AWS::SQS::Queue', {
 //     VisibilityTimeout: 300
 //   });
 });

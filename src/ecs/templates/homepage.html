@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<!--helps with compatablility with microsoft products in this case edge-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--sets the title in the tab-->
+<title>Homepage</title>
+<!--Gives the description of the website which search engines will use-->
+<meta name="description" content="Continued Professional Development - Ben LewisJones">
+<!--sets the viewport to equal the width of the device screen-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--linking to CSS stylesheets-->
+<link rel="stylesheet" href="{{url_for('static', filename='css/globalVariables.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/globalHeader.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/globalTitle.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/homepageStylesProfile.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/homepageStylesName.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/homepageStylesCards.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/globalFooter.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/art.css')}}">
+<!--linking to google fonts incase user doesnt have the font-->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<!--Container of the navigation bar and makes it clear that this is the header-->
+<header>
+    <!--navigation bar tag, and is the flex container-->
+    <nav class='navbar'>
+        <!--all address tags are indidual options for the navbar-->
+        <a href="https://www.linkedin.com/in/benjamin-lewis-jones/" target="_blank">LinkedIn</a>
+        <a href="https://github.com/Benjamintlj" target="_blank">GitHub</a>
+        <a href="https://www.instagram.com/benlj_art/" target="_blank">Art</a>
+    </nav>
+</header>
+
+<!--Contains the Title-->
+<article class="gymTitleContainer mainSection">
+    <!--The title of the webpage-->
+    <h1 class="gymTitle">Ben Lewis-Jones</h1>
+</article>
+
+<div class="profilePictureContainer">
+    <!--actual profile picture-->
+    <img src="{{url_for('static', filename='images/profilePicture.jpg')}}" alt="profile picture" class="profilePicture">
+</div>
+
+
+<!--Container of the cards-->
+<main class="allCards">
+    <!--Container for the first card-->
+    <article class="card">
+        <!--Title of the card-->
+        <h2 class="cardHeader">Programming</h2>
+        <!--contains the content of the card-->
+        <div class="cardContent">
+            <!--paragraph-->
+            <p class="cardText">I have Experience in:<br>-  Python<br>-  C++<br>-  Web development<br>-  Java <br><br> My recent projects can be found on my <a href="https://github.com/Benjamintlj" target="_blank" style="color: white;">GitHub</a> account.<br> Including:<br><br> - Visual Sorter: A project I am currently developing in my spare time, that will demonstrate sorting algorithms a visual way.<br><br> - PowderGame: Which was a university project made to simulate basic sand-box cellular automata type game.</p>
+        </div>
+    </article>
+    <!--Card container-->
+    <article class="card">
+        <!--Title of the card-->
+        <h2 class="cardHeader">Powerlifting</h2>
+        <!--Container of the content-->
+        <div class="cardContent">
+            <!--declairing a table-->
+            <table>
+                <!--table column with a paragraph in each-->
+                <td><p>Personal Bests!!!<br><br>Squat: 140KG<br><br>Bench: 90KG<br><br>Deadlift: 180KG</p></td>
+                <td><p>This is a club at Nottingham Trent University, that promotes the sport of powerlifting and hosts or attends powerlifting competitions.</p></td>
+            </table>
+        </div>
+    </article>
+    <!--card container-->
+    <article class="card">
+        <!--Title of the card-->
+        <h2 class="cardHeader">Past Work Experience</h2>
+        <!--container of the content-->
+        <div class="cardContent">
+            <!--the cards content-->
+            <p class="cardText">I have had summer jobs at: Wickes (DIY store), RIDE (Gym for customers with special needs), Dusty Miller (rural pub).<br><br> I have developed skills in: <br>- Marketing<br>- Customer Relations<br>- Team Work<br>- Time Management<br>- Effective Comunications<br>- Problem Solving</p>
+        </div>
+    </article>
+    <!--card container-->
+    <article class="card">
+        <!--Title of the card-->
+        <h2 class="cardHeader">Art</h2>
+        <!--container of the content-->
+        <div class="cardContent">
+            <!--the cards content-->
+            <p class="cardText">This is some of the digital art that I have created!!! <br><a href="https://www.instagram.com/benlj_art/" target="_blank" style="color: white;">Press here to see it :)</a></p>
+            <div class="artContainer">
+                <img src="{{url_for('static', filename='images/floatingMan.jpg')}}" alt="example of my art" class="art">
+                <img src="{{url_for('static', filename='images/mountain.jpg')}}" alt="example of my art" class="art">
+            </div>
+        </div>
+    </article>
+</main>
+
+<iframe src='https://my.spline.design/calculatorcopy-3dea4bc0295c8f3fb9fda61fe91d3b65/' frameborder='0' width='100%' height='700vw'></iframe>
+
+<!--Container of the footer-->
+<footer class="footerContainer">
+    <h2>Contact</h2>
+    <p> ben@benlewisjones.com
+    <br><br> Nantwich, Cheshire, England</p>
+</footer>
+{% endblock %}

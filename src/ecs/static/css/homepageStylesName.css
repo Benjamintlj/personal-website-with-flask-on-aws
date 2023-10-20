@@ -1,0 +1,45 @@
+/*selects the name container*/
+.nameContainer {
+    /*makes it so that i can move the element relative to were it would render in*/
+    position: relative;
+    /*sets its width to 75% of that of the viewport*/
+    width: 75%;
+}
+
+/*selects the name class*/
+.name {
+    /*sets its width to 2x that of the font-size declaired*/
+    font-size: 2em;
+    /*shifts the text to the center*/
+    text-align: center;
+    /*sets the text colour to the value of the textColor variable*/
+    color: var(--textColor);
+}
+
+/*when the viewport is above 949px wide*/
+@media only screen and (min-width: 950px) {
+    /*selecting the name*/
+    .name {
+        /*setting its maximum font size*/
+        font-size: 38px !important;
+    }
+    /*selecting the names container*/
+    .nameContainer {
+        /*making it so that the name will appear in the middle*/
+        width: 100%;
+    }
+}
+
+/*when the viewports width is smaller than 601px*/
+@media only screen and (max-width: 600px) {
+    /*selecting the name*/
+    .name {
+        /*setting the minimum font size*/
+        font-size: 24px !important;
+    }
+    /*selecting the names container*/
+    .nameContainer {
+        /*making it so that the name appears in the middle*/
+        width: 100%;
+    }
+}

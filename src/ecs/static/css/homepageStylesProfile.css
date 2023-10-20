@@ -1,0 +1,57 @@
+/*selects the profile pictures section*/
+.profilePicturesSection {
+    /*sets the height of the element to 30% of the width of the viewport*/
+    height: 30vw;
+}
+
+/*selects the main images container*/
+.profileBackgroundImageContainer {
+    /*makes it so that the image does not appear if it goes out of bounds*/
+    overflow: hidden;
+    /*allows me to move the image relative to where it would natrually render*/
+    position: relative;
+}
+
+/*selects the main image*/
+.mainImg {
+    /*makes it so that the image will scale to the center of the image*/
+    bottom: auto;
+    /*image will fill the width of the screen*/
+    width: 100%;
+    /*image will scale with the width and not warp*/
+    height: auto;
+    /*image moves up by 30% the width of the screen*/
+    transform: translateY(-30%);
+}
+
+/*selects the profile picture*/
+.profilePicture {
+    /*makes it so that the image will scale to the center of the image*/
+    bottom: auto;
+    /*the width is 15% of the width of the viewport*/
+    width: 15%;
+    /*image will scale with the width*/
+    height: auto;
+    /*makes it a circle*/
+    border-radius: 100%;
+    /*creates a drop shadow*/
+    box-shadow:
+    0 0 1px rgba(0, 0, 0, 0.034),
+    0 0 2.5px rgba(0, 0, 0, 0.048),
+    0 0 5px rgba(0, 0, 0, 0.06),
+    0 0 7.5px rgba(0, 0, 0, 0.072),
+    0 0 15px rgba(0, 0, 0, 0.086),
+    0 0 40px rgba(0, 0, 0, 0.12);
+    /*image will move 10% of the width of the image to the right*/
+    /*image will move 145% of the width of the image upwards*/
+    transform: translate(10%, -135%);
+}
+
+/*selects the profile pictures container*/
+.profilePictureContainer{
+    /*allows me to move the how i want releative to where it would render*/
+    position: relative;
+    margin-top: 12vw;
+
+    margin-bottom: -20vw;
+}

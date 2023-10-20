@@ -11,11 +11,11 @@ export class EcsStack extends cdk.Stack {
         // Create a new VPC
         const vpc = new ec2.Vpc(this, 'MyVpc', { maxAzs: 2 });
 
-        // Create an ECS cluster
+        // Create an ecs cluster
         const cluster = new ecs.Cluster(this, 'FargateCluster', { vpc });
 
         // Specify the path to your Dockerfile
-        const dockerfileDirectory = 'src/ECS/';
+        const dockerfileDirectory = 'src/ecs/';
 
         // Create a Fargate service with an application load balancer
         const fargateService=  new ecs_patterns.ApplicationLoadBalancedFargateService(this, 'MyFargateService', {

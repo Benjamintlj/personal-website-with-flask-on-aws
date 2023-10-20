@@ -1,0 +1,58 @@
+/*select body*/
+body{
+    /*sets margin to 0, so that navbar will fit viewport*/
+    margin: 0;
+    /*setting the background color*/
+    background-color: var(--backgroundColor);
+}
+
+/*selects the navbar container*/
+.navbar {
+    /*setting the navbars: background colour, margin, padding*/
+    background-color: var(--navbarColor);
+    margin: 0;
+    padding: 0;
+    /*using flexbox to make navabar responcive*/
+    display: flex;
+    /*arranges elements into a row, first element declaired first*/
+    flex-direction: row;
+    /*appears that elements have equal margins*/
+    justify-content: space-around;
+}
+
+/*selects all address tags in the navbar*/
+.navbar a{
+    /*removes the underline from links*/
+    list-style-type: none;
+    /*sets the desplay so that the elements will appear on the same line*/
+    display: inline-block;
+    /*text will go to the center of the element*/
+    text-align: center;
+    /*there is padding of 1em top and bottom, and 0 left and right*/
+    padding: 1em 0;
+    /*sets text colour*/
+    color: var(--textColor);
+    /*link wont be blue and have default styling*/
+    text-decoration: none;
+    /*sets the relative amount the element can take up compaired*/
+    /*to its siblings*/
+    flex-grow: 1;
+    /*any changes to any css rules will take 0.3 seconds and will be applyed smoothly*/
+    transition: 0.3s;
+}
+
+/*only active when curser is overlapping the address tags in navbar*/
+.navbar a:hover{
+    /*sets text colour*/
+    color: var(--navbarColor);
+    /*sets background colour*/
+    background-color: var(--textColor);
+}
+
+/*only active when viewport width is less than or including 600px*/
+@media only screen and (max-width: 600px) {
+    /*makes it so that the navbar is a column*/
+    .navbar {
+        flex-direction: column;
+    }
+}

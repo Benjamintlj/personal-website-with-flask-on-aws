@@ -1,0 +1,13 @@
+/*selecting the footer*/
+.footerContainer {
+    /*setting the text color*/
+    color: var(--textColor);
+    /*making it fill the full width of the viewport*/
+    width: 100%;
+    /*setting the background color*/
+    background-color: var(--footerColor);
+    /*increasing padding so that it doesnt feel cramped*/
+    padding-bottom: 2.5vw;
+    padding-top: 2.5vw;
+    text-align: center;
+}

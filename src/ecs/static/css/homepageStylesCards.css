@@ -1,0 +1,123 @@
+/*selects container for the card elements*/
+.allCards {
+    /*sets the background colour*/
+    background-color: var(--cardCollectionColor);
+    /*sets the margin so that the container has some space compaired to the rest of the page*/
+    margin: 5vw;
+    /*gives the rounded edges*/
+    border-radius: 5vw;
+    /*sets the height of the container, this is perfect of 5 elements*/
+    height: 120vw;
+    /*sets the display to flex*/
+    display: flex;
+    /*makes all child elements lined up into a column*/
+    flex-direction: column;
+    /*elements group up at the top of the container*/
+    justify-content: flex-start;
+    /*gives the appearance of a larger container, and a bigger background*/
+    padding: 5vw;
+    /*any elements that fall out of the container wont be visable*/
+    overflow: hidden;
+    /*gives that shadow effect on the inside of the container*/
+    box-shadow: inset 1vw -2.5vw 5vw rgba(0,0,0,0.6);
+    /*cards wont be wider than 750px*/
+    max-width: 750px;
+}
+
+/*selects all elements after the first child*/
+.card:not(:first-child) {
+    /*makes its so that they overlap*/
+    margin-top: -12.5vw;
+}
+
+/*selects all card elements*/
+.card {
+    /*using it so that elements will cover sibling elements that come before*/
+    position: relative;
+    /*setting the background colour*/
+    background-color: var(--cardColor);
+    /*setting the height of each card*/
+    height: 40vw;
+    /*setting the text colour*/
+    color: var(--textColor);
+    /*giving the cards rounded corners*/
+    border-radius: 5vw;
+    /*giving the cards a drop shadow*/
+    box-shadow: 1vw -2.5vw 5vw rgba(0,0,0,0.6);
+    /*makes it so any change in the cards styling will smoothly transition over 0.3 seconds*/
+    transition: 0.3s;
+}
+
+/*selecting the cards header*/
+.cardHeader {
+    /*aligns the header to the center*/
+    text-align: center;
+    /*sets a relative font size of 1.75 times the size of the base font size*/
+    font-size: 1.75em;
+    /*element will move downwards by 3.5% the width of the viewport*/
+    transform: translateY(3.5vw);
+}
+
+/*selects the contents of the card*/
+.cardContent {
+    /*makes it so that the content is not pushed up against the edge*/
+    margin: 3.5vw;
+    /*moves the card content down by 1.75% the width of the viewport*/
+    transform: translateY(1.75vw);
+}
+
+/*when hovering over a card all following siblings will be selected*/
+.card:hover~.card {
+    /*moves the card down by 12.5% the width of the viewport*/
+    transform: translateY(12.5vw);
+}
+/*when press on card*/
+.card:focus~.card {
+    /*moves the card down by 12.5% the width of the viewport*/
+    transform: translateY(12.5vw);
+}
+
+/*selects the table in the card*/
+.cardContent table {
+    /*sets the display to flex*/
+    display: flex;
+    /*puts all the content on the same line*/
+    flex-direction: row;
+    /*spreads them out evenly*/
+    justify-content: space-around;
+    align-content: flex-start;
+}
+
+/*selects the individual collumns*/
+.cardContent table td {
+    /*makes it so that each only takes up 50% of the horzontal space*/
+    width: 50%;
+}
+
+/*when the viewport is above 949px wide*/
+@media only screen and (min-width: 950px) {
+    /*selecting the container for the card elements*/
+    .allCards {
+        /*shifts the cotainer to the middle of the screen*/
+        margin: 5vw auto;
+    }
+    /*selects the header elements in the cards*/
+    .cardHeader {
+        /*gives a maximum font size*/
+        font-size: 33.5px !important;
+    }
+}
+
+/*when the viewport is below 601px wide*/
+@media only screen and (max-width: 600px) {
+    /*selects the header in the card*/
+    .cardHeader {
+        /*sets a minimum font size for the header*/
+        font-size: 21px !important;
+    }
+    /*selects the card*/
+    .card {
+        /*makes it so that you can scroll to see the content*/
+        overflow: scroll;
+    }
+}
