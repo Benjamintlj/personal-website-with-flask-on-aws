@@ -18,13 +18,16 @@ export class EcsStack extends cdk.Stack {
         const dockerfileDirectory = 'src/ECS/';
 
         // Create a Fargate service with an application load balancer
-        new ecs_patterns.ApplicationLoadBalancedFargateService(this, 'MyFargateService', {
+        const fargateService=  new ecs_patterns.ApplicationLoadBalancedFargateService(this, 'MyFargateService', {
             cluster,
             taskImageOptions: {
                 image: ecs.ContainerImage.fromAsset(dockerfileDirectory),
             },
             publicLoadBalancer: true,
         });
+
+        // Output the DNS name of the load balancer
+        new cdk.CfnOutput(this, 'LoadBalancerDNS', { value: fargateService.loadBalancer.loadBalancerDnsName });
     }
 }
 
