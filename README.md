@@ -1,14 +1,8 @@
-# Welcome to your CDK TypeScript project
+# Personal Website with Flask on AWS
+## Introduction
 
-This is a blank project for CDK development with TypeScript.
-
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
-
-## Useful commands
-
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+## How to release
+1. Push to main branch
+2. The aws codePipeline will automatically deploy the code 
+3. The asset stage will fail because there are two assets and only one is allowed to run at a time, to fix this press 
+`run failed jobs`. This does tend to be temperamental so it may take a few tries to work. 
