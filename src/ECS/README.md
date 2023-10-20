@@ -3,9 +3,6 @@
 ## How to run the project locally
 ```bash
 docker build -t personal-website-with-flask-on-aws-flask-ecs-image . 
-```
-
-```bash
 docker run -p 4000:80 personal-website-with-flask-on-aws-flask-ecs-image
 ```
 Open your browser and go to http://localhost:4000.
