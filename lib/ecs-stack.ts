@@ -9,7 +9,7 @@ export class EcsStack extends cdk.Stack {
         super(scope, id, props);
 
         // Create a new VPC
-        const vpc = new ec2.Vpc(this, 'MyVpc', { maxAzs: 2 });
+        const vpc = new ec2.Vpc(this, 'MyVpc', { maxAzs: 1 });
 
         // Create an ecs cluster
         const cluster = new ecs.Cluster(this, 'FargateCluster', { vpc });
@@ -30,4 +30,3 @@ export class EcsStack extends cdk.Stack {
         new cdk.CfnOutput(this, 'LoadBalancerDNS', { value: fargateService.loadBalancer.loadBalancerDnsName });
     }
 }
-
