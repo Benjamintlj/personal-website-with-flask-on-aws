@@ -18,7 +18,7 @@ export class EcsStack extends cdk.Stack {
 
         // Add capacity to the cluster
         cluster.addCapacity('DefaultAutoScalingGroup', {
-            instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.MICRO),
+            instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.NANO),
         });
 
         // Specify the path to your Dockerfile
