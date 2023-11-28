@@ -18,8 +18,7 @@ export class EcsStack extends cdk.Stack {
 
         // Add capacity to the cluster
         cluster.addCapacity('DefaultAutoScalingGroup', {
-            instanceType: ec2.InstanceType.of(ec2.InstanceClass.T4G, ec2.InstanceSize.NANO),
-            machineImage: new ec2.AmazonLinuxImage({ generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2, cpuType: ec2.AmazonLinuxCpuType.ARM_64 })
+            instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.SMALL),
         });
 
         // Specify the path to your Dockerfile
@@ -29,7 +28,7 @@ export class EcsStack extends cdk.Stack {
         const taskDefinition = new ecs.Ec2TaskDefinition(this, 'TaskDef');
         const webContainer = taskDefinition.addContainer('web', {
             image: ecs.ContainerImage.fromAsset(dockerfileDirectory),
-            memoryLimitMiB: 256,
+            memoryLimitMiB: 1024,
         });
 
         webContainer.addPortMappings({
