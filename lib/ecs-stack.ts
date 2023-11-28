@@ -28,7 +28,7 @@ export class EcsStack extends cdk.Stack {
         const taskDefinition = new ecs.Ec2TaskDefinition(this, 'TaskDef');
         const webContainer = taskDefinition.addContainer('web', {
             image: ecs.ContainerImage.fromAsset(dockerfileDirectory),
-            memoryLimitMiB: 512,
+            memoryLimitMiB: 256,
         });
 
         webContainer.addPortMappings({
