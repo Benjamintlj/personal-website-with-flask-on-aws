@@ -6,3 +6,5 @@
 2. The aws codePipeline will automatically deploy the code 
 3. The asset stage will fail because there are two assets and only one is allowed to run at a time, to fix this press 
 `run failed jobs`. This does tend to be temperamental so it may take a few tries to work. 
+
+4. You will need to push the docker file to the ECR manually. Please go to the README.md in ./src/ecr/
