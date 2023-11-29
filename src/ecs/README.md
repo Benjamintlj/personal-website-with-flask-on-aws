@@ -9,9 +9,16 @@ Open your browser and go to http://localhost:4000.
 If running on an ECS you will still use port 4000 but the url will be different.
 
 ## How to release (carrying on from the main README.md)
+arm
 ```bash
 docker build -t my-personal-website .
 aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 203163753194.dkr.ecr.eu-west-1.amazonaws.com
 docker tag my-personal-website:latest 203163753194.dkr.ecr.eu-west-1.amazonaws.com/my-personal-website-repo:latest
 docker push 203163753194.dkr.ecr.eu-west-1.amazonaws.com/my-personal-website-repo:latest
+```
+x86 (fargate)
+```bash
+docker buildx create --name mybuilder --use
+docker buildx inspect --bootstrap
+docker buildx build --platform linux/amd64 -t 203163753194.dkr.ecr.eu-west-1.amazonaws.com/my-personal-website-repo:latest --push .
 ```
