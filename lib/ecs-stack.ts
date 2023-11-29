@@ -9,40 +9,22 @@ export class EcsStack extends cdk.Stack {
         super(scope, id, props);
 
         // Create a new VPC with a specific CIDR block
-        const vpc = new ec2.Vpc(this, 'MyVpc', {
+        const vpc = new ec2.Vpc(this, 'PersonalWebsiteVpc', {
             maxAzs: 2,
         });
 
-        // Create an ecs cluster
-        const cluster = new ecs.Cluster(this, 'Ec2Cluster', { vpc });
-
-        // Add capacity to the cluster
-        cluster.addCapacity('DefaultAutoScalingGroup', {
-            instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.SMALL),
+        const cluster = new ecs.Cluster(this, 'PersonalWebsiteCluster', {
+            vpc: vpc
         });
 
-        // Specify the path to your Dockerfile
-        const dockerfileDirectory = 'src/ecs/';
 
-        // Create a task definition with a single container
-        const taskDefinition = new ecs.Ec2TaskDefinition(this, 'TaskDef');
-        const webContainer = taskDefinition.addContainer('web', {
-            image: ecs.ContainerImage.fromAsset(dockerfileDirectory),
-            memoryLimitMiB: 1024,
+        // Create a load-balanced Fargate service and make it public
+        new ecs_patterns.ApplicationLoadBalancedFargateService(this, "PersonalWebsiteFargateService", {
+            cluster: cluster, // Required
+            cpu: 256, // Default is 256
+            desiredCount: 1,
+            taskImageOptions: { image: ecs.ContainerImage.fromAsset('./src/ecs') }, // Set the image to be the docker file in 'src/ecs'
+            memoryLimitMiB: 256,
         });
-
-        webContainer.addPortMappings({
-            containerPort: 80,
-        });
-
-        // Create an EC2 service with a network load balancer
-        const ec2Service = new ecs_patterns.NetworkLoadBalancedEc2Service(this, 'MyEc2Service', {
-            cluster,
-            taskDefinition,
-            publicLoadBalancer: true,
-        });
-
-        // Output the DNS name of the load balancer
-        new cdk.CfnOutput(this, 'LoadBalancerDNS', { value: ec2Service.loadBalancer.loadBalancerDnsName });
     }
 }
