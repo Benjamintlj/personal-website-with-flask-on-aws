@@ -11,7 +11,34 @@ export class EcsStack extends cdk.Stack {
 
         const vpc = new ec2.Vpc(this, 'PersonalWebsiteVpc', {
             maxAzs: 2,
+            natGateways: 0
         });
+
+        const ecrDkrEndpoint = vpc.addInterfaceEndpoint('EcrDkrEndpoint', {
+            service: ec2.InterfaceVpcEndpointAwsService.ECR_DOCKER
+        });
+        const ecrApiEndpoint = vpc.addInterfaceEndpoint('EcrApiEndpoint', {
+            service: ec2.InterfaceVpcEndpointAwsService.ECR
+        });
+        const ecsEndpoint = vpc.addInterfaceEndpoint('EcsEndpoint', {
+            service: ec2.InterfaceVpcEndpointAwsService.ECS
+        });
+        const ecsAgentEndpoint = vpc.addInterfaceEndpoint('EcsAgentEndpoint', {
+            service: ec2.InterfaceVpcEndpointAwsService.ECS_AGENT
+        });
+        const ecsTelemetryEndpoint = vpc.addInterfaceEndpoint('EcsTelemetryEndpoint', {
+            service: ec2.InterfaceVpcEndpointAwsService.ECS_TELEMETRY
+        });
+        const s3Endpoint = vpc.addGatewayEndpoint('S3Endpoint', {
+            service: ec2.GatewayVpcEndpointAwsService.S3
+        });
+        const ssmEndpoint = vpc.addInterfaceEndpoint('SsmEndpoint', {
+            service: ec2.InterfaceVpcEndpointAwsService.SSM
+        });
+        const ec2MessagesEndpoint = vpc.addInterfaceEndpoint('Ec2MessagesEndpoint', {
+            service: ec2.InterfaceVpcEndpointAwsService.EC2_MESSAGES
+        });
+
 
         // Create an ECS cluster
         const cluster = new ecs.Cluster(this, 'personalWebsiteCluster', {
@@ -20,7 +47,8 @@ export class EcsStack extends cdk.Stack {
 
         // Add capacity to it
         cluster.addCapacity('personalWebsiteAutoScalingGroupCapacity', {
-            instanceType: new ec2.InstanceType("t2.small"),
+            instanceType: new ec2.InstanceType("t4g.nano"),
+            machineImage: ecs.EcsOptimizedImage.amazonLinux2(ecs.AmiHardwareType.ARM),
             desiredCapacity: 1,
             minCapacity: 1,
             maxCapacity: 2,
@@ -33,7 +61,7 @@ export class EcsStack extends cdk.Stack {
 
         const container = taskDefinition.addContainer('personalWebsiteContainer', {
             image: ecs.ContainerImage.fromEcrRepository(repository, 'latest'),
-            memoryLimitMiB: 512,
+            memoryLimitMiB: 256,
         });
 
         container.addPortMappings({
