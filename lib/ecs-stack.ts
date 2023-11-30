@@ -1,5 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
-import { Construct } from "constructs";
+import {Construct} from "constructs";
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
 import * as autoscaling from 'aws-cdk-lib/aws-autoscaling';
@@ -9,53 +9,34 @@ export class EcsStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
-        // Create a new VPC
         const vpc = new ec2.Vpc(this, 'PersonalWebsiteVpc', {
             maxAzs: 2,
         });
 
+
         // Create an ECS cluster
-        const cluster = new ecs.Cluster(this, 'PersonalWebsiteCluster', {
-            vpc: vpc
+        const cluster = new ecs.Cluster(this, 'personalWebsiteCluster', {
+            vpc
         });
 
-        // Define an Auto Scaling group with t4g.nano instances
-        const autoScalingGroup = new autoscaling.AutoScalingGroup(this, 'ASG', {
-            vpc,
-            instanceType: ec2.InstanceType.of(ec2.InstanceClass.T4G, ec2.InstanceSize.NANO), // Corrected to T4G.NANO
-            machineImage: ecs.EcsOptimizedImage.amazonLinux2(ecs.AmiHardwareType.ARM),
-            minCapacity: 1,
-            maxCapacity: 2
+        // Add capacity to it
+        cluster.addCapacity('personalWebsiteAutoScalingGroupCapacity', {
+            instanceType: new ec2.InstanceType("t2.small"),
+            desiredCapacity: 3,
+            maxCapacity: 6,
         });
 
-        // Create an ECS Capacity Provider using the Auto Scaling group
-        const capacityProvider = new ecs.AsgCapacityProvider(this, 'AsgCapacityProvider', {
-            autoScalingGroup: autoScalingGroup,
-        });
-
-        cluster.addAsgCapacityProvider(capacityProvider);
-
-        // Get an existing ECR repository
         const repository = ecr.Repository.fromRepositoryName(this, 'MyRepository', 'my-personal-website-repo');
 
-        // Create an ECS Task Definition
-        const taskDefinition = new ecs.Ec2TaskDefinition(this, 'TaskDef');
+        const taskDefinition = new ecs.Ec2TaskDefinition(this, 'personalWebsiteTaskDef');
 
-        // Add a container to the Task Definition
-        const container = taskDefinition.addContainer('web', {
+        taskDefinition.addContainer('personalWebsiteContainer', {
             image: ecs.ContainerImage.fromEcrRepository(repository, 'latest'),
             memoryLimitMiB: 512,
-            cpu: 512,
         });
 
-        // Map port 80 of the container to port 80 on the host
-        container.addPortMappings({
-            containerPort: 80,
-            hostPort: 80
-        });
-
-        // Create an ECS Service using the EC2 launch type
-        new ecs.Ec2Service(this, 'EC2Service', {
+        // Instantiate an Amazon ECS Service
+        const ecsService = new ecs.Ec2Service(this, 'Service', {
             cluster,
             taskDefinition,
         });
