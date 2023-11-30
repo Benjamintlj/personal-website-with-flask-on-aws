@@ -18,6 +18,7 @@ docker push 203163753194.dkr.ecr.eu-west-1.amazonaws.com/my-personal-website-rep
 ```
 x86 (fargate)
 ```bash
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 203163753194.dkr.ecr.eu-west-1.amazonaws.com
 docker buildx create --name mybuilder --use
 docker buildx inspect --bootstrap
 docker buildx build --platform linux/amd64 -t 203163753194.dkr.ecr.eu-west-1.amazonaws.com/my-personal-website-repo:latest --push .
