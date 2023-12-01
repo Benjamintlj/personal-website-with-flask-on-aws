@@ -4,6 +4,8 @@ import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
 import * as ecr from "aws-cdk-lib/aws-ecr";
 import * as elbv2 from 'aws-cdk-lib/aws-elasticloadbalancingv2'; // Import ELBv2 for Application Load Balancer
+import * as route53 from 'aws-cdk-lib/aws-route53';
+import * as target from 'aws-cdk-lib/aws-route53-targets';
 
 export class EcsStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -11,34 +13,13 @@ export class EcsStack extends cdk.Stack {
 
         const vpc = new ec2.Vpc(this, 'PersonalWebsiteVpc', {
             maxAzs: 2,
-            natGateways: 0
+            subnetConfiguration: [
+                {
+                    name: 'public',
+                    subnetType: ec2.SubnetType.PUBLIC,
+                }
+            ],
         });
-
-        const ecrDkrEndpoint = vpc.addInterfaceEndpoint('EcrDkrEndpoint', {
-            service: ec2.InterfaceVpcEndpointAwsService.ECR_DOCKER
-        });
-        const ecrApiEndpoint = vpc.addInterfaceEndpoint('EcrApiEndpoint', {
-            service: ec2.InterfaceVpcEndpointAwsService.ECR
-        });
-        const ecsEndpoint = vpc.addInterfaceEndpoint('EcsEndpoint', {
-            service: ec2.InterfaceVpcEndpointAwsService.ECS
-        });
-        const ecsAgentEndpoint = vpc.addInterfaceEndpoint('EcsAgentEndpoint', {
-            service: ec2.InterfaceVpcEndpointAwsService.ECS_AGENT
-        });
-        const ecsTelemetryEndpoint = vpc.addInterfaceEndpoint('EcsTelemetryEndpoint', {
-            service: ec2.InterfaceVpcEndpointAwsService.ECS_TELEMETRY
-        });
-        const s3Endpoint = vpc.addGatewayEndpoint('S3Endpoint', {
-            service: ec2.GatewayVpcEndpointAwsService.S3
-        });
-        const ssmEndpoint = vpc.addInterfaceEndpoint('SsmEndpoint', {
-            service: ec2.InterfaceVpcEndpointAwsService.SSM
-        });
-        const ec2MessagesEndpoint = vpc.addInterfaceEndpoint('Ec2MessagesEndpoint', {
-            service: ec2.InterfaceVpcEndpointAwsService.EC2_MESSAGES
-        });
-
 
         // Create an ECS cluster
         const cluster = new ecs.Cluster(this, 'personalWebsiteCluster', {
@@ -85,6 +66,18 @@ export class EcsStack extends cdk.Stack {
                 containerName: 'personalWebsiteContainer',
                 containerPort: 80
             })]
+        });
+
+        const zone = route53.HostedZone.fromLookup(this, 'benlewisjones.com', { domainName: 'benlewisjones.com' });
+        new route53.ARecord(this, 'personalWebsiteAliasRecord', {
+            zone,
+            target: route53.RecordTarget.fromAlias(new target.LoadBalancerTarget(loadBalancer)),
+            recordName: 'benlewisjones.com'
+        });
+        new route53.CnameRecord(this, 'wwwPersonalWebsiteRecord', {
+            zone,
+            recordName: 'www.benlewisjones.com',
+            domainName: loadBalancer.loadBalancerDnsName
         });
     }
 }
